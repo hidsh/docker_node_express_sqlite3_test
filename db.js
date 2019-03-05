@@ -49,5 +49,15 @@ module.exports.list_all = function() {
             resolve(rows);
         });
     });
-}
+};
 
+module.exports.insert = function(name, item) {
+    return new Promise(function(resolve, reject) {
+        console.log('---5\n');
+        
+        db.run('INSERT INTO orders (name, item) VALUES(?,?);', [name, item], function(err, rows) {
+            if(err) return reject(err);
+            resolve();
+        });
+    });
+};

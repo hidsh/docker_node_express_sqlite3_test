@@ -8,7 +8,9 @@ var db = new sqlite.init('./test.db');
 var express = require('express');
 var app = express();
 
-// HTTPリクエストを受け取る部分
+//
+// HTTPリクエストのハンドラ
+//
 app.get('/', function (req, res) {
     res.send('Hello node - express !');
 });
@@ -21,10 +23,11 @@ app.get('/test', function(req, res) {
         // console.log(data);
         res.send('<h1>' + data + '年</h1>');
     });
-    console.log('---x');
+    console.log('--- test end');
     // res.send('promise test');
 });
 
+// sqlite test: select
 app.get('/list', function(req, res) {
     s = '<table border="1" cellspacing="0" cellpadding="5">';
     sqlite.list_all().then(function(rows) {
@@ -36,45 +39,26 @@ app.get('/list', function(req, res) {
         res.send(s + '</table>');
     });
 
-    console.log('---y');
-
+    console.log('--- list end');
 });
 
 
-/*
+// sqlite test: insert
 app.get('/insert', function(req, res) {
-    db.serialize(function(){
-
-        console.log('---5\n');
-        
-        // プリペアードステートメントでINSERT
-        var stmt = db.prepare('INSERT INTO orders (name, item) VALUES(?,?);');
-        stmt.run(["ホゲオ", "松"]);
-        stmt.finalize();
-
-        // SELECT
-        db.serialize(function() {
-            db.each("SELECT * FROM orders;", function(err, row) {
-                console.log(row);
-            });
-        });
+    let name = 'ホゲオ', item = '松';
+    
+    sqlite.insert(name, item).then(function() {
+        res.send(name + ' さまから「' + item +'」のご注文を承りました。</br>');
     });
-
-    db.close();
-
-    if 
-    res.send('id:$id  name:$name item:$item created_at:$datetime</br>',
-             {$id: row.id, $name: row.name, $item: row.item, $datetime: row.created_at});
+    console.log('---insert end');
 });
-*/
 
-// サーバーを起動する部分
+//
+// サーバーを起動
+//
 var server = app.listen(3000, function() {
-  var host = server.address().address;
-  var port = server.address().port;
-  console.log('Example app listening at http://localhost:8080 in docker container');
-
-
-
+    var host = server.address().address;
+    var port = server.address().port;
+    console.log('Listening at http://localhost:8080 in docker container');
 });
 
