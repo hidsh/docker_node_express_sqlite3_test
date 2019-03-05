@@ -2,10 +2,10 @@
 // https://kuroeveryday.blogspot.com/2016/05/nodejs-sqlite3.html
 
 var sqlite3 = require('sqlite3');
-var row;
+var db;
 
 module.exports.init = function(file) {
-    var db = new sqlite3.Database(file);
+    db = new sqlite3.Database(file);
 
     db.serialize(function() {
         var create = new Promise(function(resolve, reject) {
@@ -42,26 +42,12 @@ module.exports.test = function() {
     });
 };
 
-/* not yet
-
-module.exports.list_all = function(db) {
-    var selectedValue = function() {
-        return new Promise(function(resolve, reject) {
-            // db.serialize(function() {
-                db.run('SELECT * FROM orders;', function (err, row) {
-                    if(err) return reject(err);
-                    
-                    resolve(row);
-                });
-            // });
+module.exports.list_all = function() {
+    return new Promise(function(resolve, reject) {
+        db.all('SELECT * FROM orders;', function(err, rows) {
+            if(err) return reject(err);
+            resolve(rows);
         });
-    };
-
-    var items = selectedValue();
-    console.log('---7');
-    console.log(items);
-
-    // return selectedValue;
+    });
 }
 
-*/

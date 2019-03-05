@@ -20,25 +20,26 @@ app.get('/test', function(req, res) {
     }).then(function(data) {
         // console.log(data);
         res.send('<h1>' + data + '年</h1>');
-    })
+    });
     console.log('---x');
     // res.send('promise test');
 });
 
-/* not yet
-
 app.get('/list', function(req, res) {
-    console.log('---6\n');
+    s = '<table border="1" cellspacing="0" cellpadding="5">';
+    sqlite.list_all().then(function(rows) {
+        console.log(rows);
 
-    var row = sqlite.list_all(db);
-    if(row == {}) 
-        res.send('no entry</br>');
-    else    
-        // res.send('id:' + row.id + '  name:' + row.name + '  item:'+ row.item + '  created_at:'+ row.created_at + '</br>');
-        res.send(row + '</br>');
+        rows.forEach(function(r) {
+            s += '<tr><td>' + r.id + '</td><td>' + r.name + '</td><td>' + r.item + '</td><td>' + r.created_at + '</td></tr>';
+        });
+        res.send(s + '</table>');
+    });
+
+    console.log('---y');
+
 });
 
-*/
 
 /*
 app.get('/insert', function(req, res) {
