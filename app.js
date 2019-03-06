@@ -69,6 +69,16 @@ app.get('/delete', function(req, res) {
     console.log('---delete end');
 });
 
+// sqlite test: update
+app.get('/update', function(req, res) {
+    let name = 'ホゲオ', item = '梅';
+    
+    sqlite.update(name, item).then(function() {
+        res.send(`${name}さまからのご注文を${item}に変更しました。</br>`);
+    });
+    console.log('---update end');
+});
+
 
 //
 // サーバーを起動

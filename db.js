@@ -71,3 +71,12 @@ module.exports.delete = function(name) {
         });
     });
 };
+
+module.exports.update = function(name, item) {
+    return new Promise(function(resolve, reject) {
+        db.run(`UPDATE orders SET item="${item}" WHERE name="${name}";`, function(err, rows) {
+            if(err) return reject(err);
+            resolve();
+        });
+    });
+};
