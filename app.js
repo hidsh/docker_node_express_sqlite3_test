@@ -40,7 +40,8 @@ app.get('/list', function(req, res) {
         console.log(rows);
 
         rows.forEach(function(r) {
-            s += '<tr><td>' + r.id + '</td><td>' + r.name + '</td><td>' + r.item + '</td><td>' + r.created_at + '</td></tr>';
+            // s += '<tr><td>' + r.id + '</td><td>' + r.name + '</td><td>' + r.item + '</td><td>' + r.created_at + '</td></tr>';
+            s += `<tr><td>${r.id}</td><td>${r.name}</td><td>${r.item}</td><td>${r.created_at}</td></tr>`;
         });
         res.send(s + '</table>');
     });
