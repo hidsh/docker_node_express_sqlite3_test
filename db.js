@@ -53,9 +53,19 @@ module.exports.list_all = function() {
 
 module.exports.insert = function(name, item) {
     return new Promise(function(resolve, reject) {
-        console.log('---5\n');
-        
         db.run('INSERT INTO orders (name, item) VALUES(?,?);', [name, item], function(err, rows) {
+            if(err) return reject(err);
+            resolve();
+        });
+    });
+};
+
+module.exports.delete = function(name) {
+    return new Promise(function(resolve, reject) {
+        // NG: db.run('DELETE FROM orders WHERE name="?";', [name], function(err, rows) {
+        // OK: db.run('DELETE FROM orders WHERE name="ホゲオ";', function(err, rows) {
+        //     sqlite3 のバグらしい
+        db.run(`DELETE FROM orders WHERE name="${name}";`, function(err, rows) {
             if(err) return reject(err);
             resolve();
         });

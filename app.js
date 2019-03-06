@@ -8,6 +8,12 @@ var db = new sqlite.init('./test.db');
 var express = require('express');
 var app = express();
 
+/*
+var u="ソニックブーム", num=8;
+console.log(`一句：待ちガイル ${u} ${num}連発！`)
+*/
+
+
 //
 // HTTPリクエストのハンドラ
 //
@@ -48,10 +54,21 @@ app.get('/insert', function(req, res) {
     let name = 'ホゲオ', item = '松';
     
     sqlite.insert(name, item).then(function() {
-        res.send(name + ' さまから「' + item +'」のご注文を承りました。</br>');
+        res.send(`${name}さまから「${item}」のご注文を承りました。</br>`);
     });
     console.log('---insert end');
 });
+
+// sqlite test: delete
+app.get('/delete', function(req, res) {
+    let name = 'ホゲオ';
+    
+    sqlite.delete(name).then(function() {
+        res.send(`${name}さまからのご注文をキャンセルしました。</br>`);
+    });
+    console.log('---delete end');
+});
+
 
 //
 // サーバーを起動
